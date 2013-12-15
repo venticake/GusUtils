@@ -13,7 +13,7 @@
 @dynamic location;
 
 - (NSString *)getUTCFormattedDate:(NSDate *)localDate {
-
+    
     static NSDateFormatter *dateFormatter;
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -23,6 +23,15 @@
     }
     NSString *dateString = [dateFormatter stringFromDate:localDate];
     return dateString;
+}
+
+- (NSString *)getLocalFormattedDate:(NSDate *)localDate {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+    [dateFormatter setTimeZone:timeZone];
+    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    return [dateFormatter stringFromDate:localDate];
 }
 
 - (id)initWithImageSampleBuffer:(CMSampleBufferRef) imageDataSampleBuffer {
@@ -209,13 +218,14 @@
 }
 
 - (void)setDateOriginal:(NSDate *)date {
-    NSString *dateString = [self getUTCFormattedDate:date];
+    NSString *dateString = [self getLocalFormattedDate:date];
     [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
     [TIFF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyTIFFDateTime];
+    [IPTC_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyIPTCDateCreated];
 }
 
 - (void)setDateDigitized:(NSDate *)date {
-    NSString *dateString = [self getUTCFormattedDate:date];
+    NSString *dateString = [self getLocalFormattedDate:date];
     [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeDigitized];
 }
 

@@ -24,8 +24,9 @@ Pod::Spec.new do |s|
   
   s.platform     = :ios
   s.source       = { :git => "https://github.com/tastyone/GusUtils.git", :commit => "5f104b262aaf822ba4c0e31a13d868ecf123d08f" }
-  s.source_files  = 'GusUtils/NSMutableDictionary+ImageMetadata.{h,m}'
+  s.source_files  = 'GusUtils', 'GusUtils/*.{h,m}', 'GusUtils/**/*.{h,m}'
   s.preserve_paths = "README.md"
-  s.frameworks = 'CoreGraphics'
+  s.frameworks = 'AssetsLibrary', 'CoreLocation', 'CoreMedia', 'Foundation', 'ImageIO', 'UIKit', 'CoreGraphics'
+  s.requires_arc = true
 
 end

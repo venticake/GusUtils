@@ -28,5 +28,6 @@ Pod::Spec.new do |s|
   s.preserve_paths = "README.md"
   s.frameworks = 'AssetsLibrary', 'CoreLocation', 'CoreMedia', 'Foundation', 'ImageIO', 'UIKit', 'CoreGraphics'
   s.requires_arc = false
+  s.compiler_flags = '-fno-objc-arc'
 
 end

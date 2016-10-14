@@ -26,12 +26,15 @@
 }
 
 - (NSString *)getLocalFormattedDate:(NSDate *)localDate {
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-    [dateFormatter setTimeZone:timeZone];
-    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-    return [dateFormatter stringFromDate:localDate];
+    static NSDateFormatter *localDateFormatter;
+    if (localDateFormatter == nil) {
+        localDateFormatter = [[NSDateFormatter alloc] init];
+        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
+        [localDateFormatter setTimeZone:timeZone];
+        [localDateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    }
+    NSString *dateString = [localDateFormatter stringFromDate:localDate];
+    return dateString;
 }
 
 - (id)initWithImageSampleBuffer:(CMSampleBufferRef) imageDataSampleBuffer {

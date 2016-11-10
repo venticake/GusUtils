@@ -224,7 +224,7 @@
     NSString *dateString = [self getLocalFormattedDate:date];
     [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
     [TIFF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyTIFFDateTime];
-    [IPTC_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyIPTCDateCreated];
+    //[IPTC_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyIPTCDateCreated]; // don't use..
 }
 
 - (void)setDateDigitized:(NSDate *)date {

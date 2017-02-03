@@ -36,12 +36,8 @@
  [self performSelectorOnMainThread: withObject: waitUntilDone:NO];
  */
 - (id)initFromAssetURL:(NSURL*)assetURL;
-
 - (void)setUserComment:(NSString*)comment;
-- (void)setDateOriginal:(NSDate *)date;
-- (void)setDateDigitized:(NSDate *)date;
 - (void)setMake:(NSString*)make model:(NSString*)model software:(NSString*)software;
-- (void)setDescription:(NSString*)description;
 - (void)setKeywords:(NSString*)keywords;
 - (void)setImageOrientation:(UIImageOrientation)orientation;
 - (void)setDigitalZoom:(CGFloat)zoom;
@@ -49,5 +45,8 @@
 
 @property (nonatomic, retain) CLLocation *location;
 @property (nonatomic, assign) CLLocationDirection trueHeading;
+@property (nonatomic, strong) NSString *description;
+@property (nonatomic, strong) NSDate *dateOriginal;
+@property (nonatomic, strong) NSDate *dateDigitized;
 
 @end

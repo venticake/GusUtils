@@ -13,7 +13,6 @@
 @dynamic location;
 
 - (NSString *)getUTCFormattedDate:(NSDate *)localDate {
-    
     static NSDateFormatter *dateFormatter;
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -35,6 +34,16 @@
     }
     NSString *dateString = [localDateFormatter stringFromDate:localDate];
     return dateString;
+}
+
+- (NSDate *)localFormattedDateWithString:(NSString *)string {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+    [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    
+    NSDate *date = [dateFormatter dateFromString:string];
+    [dateFormatter release];
+    return date;
 }
 
 - (id)initWithImageSampleBuffer:(CMSampleBufferRef) imageDataSampleBuffer {
@@ -177,7 +186,7 @@
         return location;
     }
     
-    return nil;
+    return [[[CLLocation alloc] initWithLatitude:0 longitude:0] autorelease];
 }
 
 - (CLLocationDirection)trueHeading {
@@ -220,11 +229,23 @@
     [EXIF_DICT setObject:comment forKey:(NSString*)kCGImagePropertyExifUserComment];
 }
 
+- (NSDate *)dateOriginal {
+    NSString *dateString = EXIF_DICT[(NSString*)kCGImagePropertyExifDateTimeOriginal];
+    if (dateString) {
+        return [self localFormattedDateWithString:dateString];
+    }
+    return nil;
+}
+
 - (void)setDateOriginal:(NSDate *)date {
     NSString *dateString = [self getLocalFormattedDate:date];
     [EXIF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyExifDateTimeOriginal];
     [TIFF_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyTIFFDateTime];
     //[IPTC_DICT setObject:dateString forKey:(NSString*)kCGImagePropertyIPTCDateCreated]; // don't use..
+}
+
+- (NSDate *)dateDigitized {
+    return EXIF_DICT[(NSString*)kCGImagePropertyExifDateTimeDigitized];
 }
 
 - (void)setDateDigitized:(NSDate *)date {
@@ -239,6 +260,10 @@
     [tiffDict setObject:software forKey:(NSString*)kCGImagePropertyTIFFSoftware];
 }
 
+- (NSString *)description {
+    return TIFF_DICT[(NSString*)kCGImagePropertyTIFFImageDescription];
+}
+
 - (void)setDescription:(NSString*)description {
     [TIFF_DICT setObject:description forKey:(NSString*)kCGImagePropertyTIFFImageDescription];
 }
@@ -250,7 +275,6 @@
 - (void)setDigitalZoom:(CGFloat)zoom {
     [EXIF_DICT setObject:[NSNumber numberWithFloat:zoom] forKey:(NSString*)kCGImagePropertyExifDigitalZoomRatio];
 }
-
 
 /* The intended display orientation of the image. If present, the value 
  * of this key is a CFNumberRef with the same value as defined by the 

@@ -17,7 +17,7 @@
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
     
     for (AVMetadataItem *item in items) {
-        if ([item.key isEqual:AVMetadataCommonKeyLocation]) {
+        if ([item.commonKey isEqualToString:AVMetadataCommonKeyLocation]) {
             NSString *locationString = (NSString *) item.value;
             if (locationString.length >= 16) {
                 NSString *latitude  = [locationString substringToIndex:8];
@@ -25,8 +25,7 @@
                 CLLocation *location = [[CLLocation alloc] initWithLatitude:latitude.doubleValue longitude:longitude.doubleValue];
                 [dict setLocation:location];
             }
-            
-        } else if ([item.key isEqual:AVMetadataCommonKeyDescription]) {
+        } else if ([item.commonKey isEqualToString:AVMetadataCommonKeyDescription]) {
             [dict setDescription:item.value];
         }
     }

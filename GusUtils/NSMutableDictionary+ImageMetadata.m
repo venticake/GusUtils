@@ -260,7 +260,7 @@
     [tiffDict setObject:software forKey:(NSString*)kCGImagePropertyTIFFSoftware];
 }
 
-- (NSString *)description {
+- (NSString *)descriptionString {
     return TIFF_DICT[(NSString*)kCGImagePropertyTIFFImageDescription];
 }
 

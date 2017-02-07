@@ -45,7 +45,7 @@
     AVMutableMetadataItem *descriptionItem = [[AVMutableMetadataItem alloc] init];
     descriptionItem.key = AVMetadataCommonKeyDescription;
     descriptionItem.keySpace = AVMetadataKeySpaceCommon;
-    descriptionItem.value = self.description;
+    descriptionItem.value = self.descriptionString;
     
     return @[locationItem, descriptionItem];
 }

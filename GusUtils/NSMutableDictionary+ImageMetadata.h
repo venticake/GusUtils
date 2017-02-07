@@ -40,12 +40,13 @@
 - (void)setMake:(NSString*)make model:(NSString*)model software:(NSString*)software;
 - (void)setKeywords:(NSString*)keywords;
 - (void)setImageOrientation:(UIImageOrientation)orientation;
+- (void)setDescription:(NSString*)description;
 - (void)setDigitalZoom:(CGFloat)zoom;
 - (void)setHeading:(CLHeading*)heading;
 
 @property (nonatomic, retain) CLLocation *location;
 @property (nonatomic, assign) CLLocationDirection trueHeading;
-@property (nonatomic, strong) NSString *description;
+@property (nullable, nonatomic, readonly) NSString *descriptionString;
 @property (nonatomic, strong) NSDate *dateOriginal;
 @property (nonatomic, strong) NSDate *dateDigitized;
 

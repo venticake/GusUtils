@@ -16,34 +16,31 @@
     static NSDateFormatter *dateFormatter;
     if (dateFormatter == nil) {
         dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_us"];
         NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
         [dateFormatter setTimeZone:timeZone];
         [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
     }
-    NSString *dateString = [dateFormatter stringFromDate:localDate];
-    return dateString;
+    return [dateFormatter stringFromDate:localDate];
 }
 
 - (NSString *)getLocalFormattedDate:(NSDate *)localDate {
-    static NSDateFormatter *localDateFormatter;
-    if (localDateFormatter == nil) {
-        localDateFormatter = [[NSDateFormatter alloc] init];
-        NSTimeZone *timeZone = [NSTimeZone localTimeZone];
-        [localDateFormatter setTimeZone:timeZone];
-        [localDateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
+    static NSDateFormatter *dateFormatter;
+    if (dateFormatter == nil) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+        dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_us"];
+        [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
+        [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
     }
-    NSString *dateString = [localDateFormatter stringFromDate:localDate];
-    return dateString;
+    return [dateFormatter stringFromDate:localDate];
 }
 
 - (NSDate *)localFormattedDateWithString:(NSString *)string {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_us"];
     [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
     [dateFormatter setDateFormat:@"yyyy:MM:dd HH:mm:ss"];
-    
-    NSDate *date = [dateFormatter dateFromString:string];
-    [dateFormatter release];
-    return date;
+    return [dateFormatter dateFromString:string];
 }
 
 - (id)initWithImageSampleBuffer:(CMSampleBufferRef) imageDataSampleBuffer {
